@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-*5^8%e^ikrz=^
 DEBUG = True 
 #'RENDER' not in os.environ
 
-ALLOWED_HOSTS = ['https://todas-xogan-frontend.vercel.app/']
+ALLOWED_HOSTS = ['restapitodasxogan.onrender.com', 'localhost', '127.0.0.1']
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
@@ -72,9 +72,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ORIGINS = ['http://localhost:5173']
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_CREDENTIALS = False
+CORS_ALLOWED_ORIGINS = [
+    'https://todas-xogan-frontend.vercel.app',
+]
 
 
 CORS_ALLOWED_METHODS = [
