@@ -13,14 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
-import environ
 
-env = environ.Env()
-environ.Env.read_env()
-
-SUPABASE_URL = env('SUPABASE_URL')
-SUPABASE_ANON_KEY = env('SUPABASE_ANON_KEY')
-SUPABASE_SERVICE_KEY = env('SUPABASE_SERVICE_KEY')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -199,5 +192,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
 }
