@@ -84,6 +84,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     'https://todas-xogan-frontend.vercel.app',
+    'https://restapitodasxogan.onrender.com'
     'http://localhost:5173', 
     'http://127.0.0.1:5173', 
 ]
@@ -198,7 +199,5 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    ],
+    
 }
