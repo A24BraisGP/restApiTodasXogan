@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import  check_password
 from django.http import Http404
 from django.contrib.auth import authenticate 
 from rest_framework_simplejwt.tokens import RefreshToken 
-from rest_frameworks.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 
 
 @api_view(['GET'])
