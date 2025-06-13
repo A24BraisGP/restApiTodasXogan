@@ -122,9 +122,9 @@ class LoginView(APIView):
         # 1. Get credentials from the request body.
         # Make sure field names ('nome', 'contrasinal') match what your frontend sends.
         nome = request.data.get('nome')         # Your username field
-        contrasinal = request.data.get('contrasinal') # Your password field
+        password = request.data.get('password') # Your password field
 
-        if not nome or not contrasinal:
+        if not nome or not password:
             return Response(
                 {'error': 'Faltan nome e contrasinal.'},
                 status=status.HTTP_400_BAD_REQUEST
@@ -136,7 +136,7 @@ class LoginView(APIView):
         # - Verifying the `password` against the stored hash.
         # - Checking if the user is active (`is_active = True`).
         # It returns the User object on success, or None on failure.
-        user = authenticate(request, username=nome, password=contrasinal)
+        user = authenticate(request, username=nome, password=password)
 
         if user is not None:
             # 3. If authentication is successful, generate JWT tokens.
