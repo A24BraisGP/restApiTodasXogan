@@ -7,7 +7,6 @@ from .models import (
     PropostaVideoxogoPlataforma, PropostaVideoxogoAccesibilidade
 )
 from django.contrib.auth.hashers import make_password
-
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -40,7 +39,6 @@ class VideoxogoSerializer(serializers.ModelSerializer):
     xenero = serializers.PrimaryKeyRelatedField(many=True, queryset=Xenero.objects.all(), required=False)
     plataforma = serializers.PrimaryKeyRelatedField(many=True, queryset=Plataforma.objects.all(), required=False)
     accesibilidades = serializers.PrimaryKeyRelatedField(many=True, queryset=Accesibilidade.objects.all(), required=False)
-
     class Meta:
         model = Videoxogo
         fields = '__all__'

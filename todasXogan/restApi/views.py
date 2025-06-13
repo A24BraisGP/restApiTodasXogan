@@ -1,7 +1,7 @@
 from rest_framework import generics, status
 from .models import *
 from .serializers import *
-
+from rest_framework.parsers import MultiPartParser, FormParser 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -22,6 +22,7 @@ def api_home(request, format=None):
 class UsuarioListCreateView(generics.ListCreateAPIView):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
+    parser_classes= (MultiPartParser,FormParser,)
 
     # --- THIS IS THE KEY CHANGE ---
     def get_permissions(self):
@@ -44,6 +45,7 @@ class UsuarioDetailView(generics.RetrieveUpdateDestroyAPIView):
 class VideoxogoListCreateView(generics.ListCreateAPIView):
     queryset = Videoxogo.objects.all()
     serializer_class = VideoxogoSerializer
+    parser_classes= (MultiPartParser,FormParser,)
 
 class VideoxogoDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Videoxogo.objects.all()
@@ -157,6 +159,7 @@ class LoginView(APIView):
 
             # 4. Serialize the user data to include in the response.
             serializer = UsuarioSerializer(user)
+            parser_classes= (MultiPartParser,FormParser,)
 
             # 5. Return a successful 200 OK response with tokens and user data.
             return Response({
@@ -182,13 +185,17 @@ def check_nome_usuario(request, nome):
 class PropostaVideoxogoListCreateView(generics.ListCreateAPIView):
     queryset = PropostaVideoxogo.objects.all()
     serializer_class = PropostaVideoxogoSerializer
+    parser_classes= (MultiPartParser,FormParser,)
 
+    
     def get_queryset(self):
         return PropostaVideoxogo.objects.all()
 
 class PropostaVideoxogoDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = PropostaVideoxogo.objects.all()
     serializer_class = PropostaVideoxogoSerializer
+    parser_classes= (MultiPartParser,FormParser,)
+
 
     def get_queryset(self):
         return PropostaVideoxogo.objects.all()
@@ -196,6 +203,8 @@ class PropostaVideoxogoDetailView(generics.RetrieveUpdateDestroyAPIView):
 class PropostaVideoxogoRevisionView(generics.UpdateAPIView):
     queryset = PropostaVideoxogo.objects.all()
     serializer_class = PropostaVideoxogoSerializer
+    parser_classes= (MultiPartParser,FormParser,)
+
 
     def get_queryset(self):
         return PropostaVideoxogo.objects.filter(estado='PENDENTE')

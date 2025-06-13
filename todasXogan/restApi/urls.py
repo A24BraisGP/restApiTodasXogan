@@ -47,7 +47,3 @@ urlpatterns = [
     path('propostas/<int:pk>/', PropostaVideoxogoDetailView.as_view(), name='proposta-detail'),
     path('propostas/<int:pk>/revision/', PropostaVideoxogoRevisionView.as_view(), name='proposta-revision'),
 ]  
-
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
