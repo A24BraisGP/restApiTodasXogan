@@ -10,7 +10,7 @@ python manage.py migrate
 python manage.py init_site
 
 
-if [[ "$CREATE_SUPERUSER" ]]; then
-  python manage.py create_admin_user
-fi
+# if [[ "$CREATE_SUPERUSER" ]]; then
+#   python manage.py create_admin_user
+# fi
 
