@@ -61,21 +61,18 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     'https://todas-xogan-frontend.vercel.app',
@@ -128,7 +125,7 @@ WSGI_APPLICATION = 'todasXogan.wsgi.application'
 
 DATABASE_URL = config('DATABASE_URL')
 DATABASES = {
-    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600) # conn_max_age es opcional
+    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600,ssl_require=True) 
 }
 
 
@@ -239,20 +236,22 @@ SIMPLE_JWT = {
 }
 
 
+
 # AWS S3 Configuration
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='eu-north-1') 
+AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='eu-north-1') # Confirma esta región
 
 AWS_DEFAULT_ACL = 'public-read'
-
 AWS_S3_FILE_OVERWRITE = False
-
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
+# --- CONFIGURACIÓN PARA S3 (ESTO DEBE SER SIEMPRE ASÍ, INDEPENDIENTEMENTE DE DEBUG) ---
+# Default storage para archivos de medios (imágenes subidas por usuarios)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/' 
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
+# Configuración para archivos estáticos (CSS, JS, imágenes de templates, de DRF, admin)
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/' 
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
