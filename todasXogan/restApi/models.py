@@ -1,7 +1,9 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 from django import forms
-from django.contrib.auth.hashers import check_password as django_check_password, make_password
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.hashers import make_password, check_password
+
 
 # Create your models here.
 class Plataforma(models.Model):
@@ -58,25 +60,98 @@ class Videoxogo(models.Model):
         return self.titulo
     
 
-class Usuario(models.Model):
-    nome = models.CharField(max_length=100)
-    email = models.EmailField(max_length=250, unique=True)
-    contrasinal = models.CharField(max_length=128)
-    imaxe_user = models.ImageField(upload_to="users/",null=True,blank=True)
-    admin = models.BooleanField(default=False, null=False)
-    favoritos = models.ManyToManyField('Videoxogo', through='Favorito', related_name='usuarios_favoritos')
-    preferencias = models.ManyToManyField('Accesibilidade', through='PreferenciasAccesibilidade',related_name='usuario_preferencias')
+# --- Define tu Custom User Manager ---
+# Este manager es crucial. Sabe cómo crear instancias de tu modelo de usuario
+# y cómo manejar contraseñas, staff, y superusuarios.
+class UsuarioManager(BaseUserManager):
+    def create_user(self, nome, email, password=None, **extra_fields):
+        if not nome:
+            raise ValueError('O campo nome de usuario é obrigatorio.')
+        if not email:
+            raise ValueError('O enderezo de correo electrónico é obrigatorio.')
+
+        email = self.normalize_email(email)
+        user = self.model(nome=nome, email=email, **extra_fields)
+        user.set_password(password) # ¡Usa set_password para hashear la contraseña!
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, nome, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_active', True)
+        extra_fields.setdefault('admin', True) # Si tu campo 'admin' tiene un propósito específico
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser debe ter is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser debe ter is_superuser=True.')
+
+        return self.create_user(nome, email, password, **extra_fields)
+
+# --- Tu Custom User Model Refactorizado ---
+class Usuario(AbstractBaseUser, PermissionsMixin):
+    # Campos existentes de tu modelo original:
+    nome = models.CharField(max_length=100, unique=True, help_text="Nome de usuario único.")
+    email = models.EmailField(max_length=250, unique=True, help_text="Enderezo de correo electrónico único.")
     
+    # Campo 'contrasinal':
+    # ¡IMPORTANTE! El campo 'password' ya lo proporciona AbstractBaseUser internamente.
+    # NO DEBES DEFINIR 'contrasinal' aquí si quieres que Django maneje la contraseña principal.
+    # Si lo dejas, Django lo ignorará para la autenticación principal,
+    # lo cual causará problemas.
+    #
+    # Si por alguna razón histórica o de compatibilidad SÓLO quieres que se llame 'contrasinal' en la DB
+    # y que Django lo use, DEBERÍAS RENOMBRAR la columna de la base de datos a 'password'
+    # o usar un campo proxy, lo cual es más complejo.
+    #
+    # La mejor práctica es que tu modelo ya NO TENGA un campo 'contrasinal'.
+    # Django usará el campo `password` (que no ves explícitamente pero está en la herencia).
+    # Cuando hagas `user.set_password(raw_password)`, guardará el hash en ese campo `password`.
+    #
+    # Por lo tanto, ¡ELIMINA LA SIGUIENTE LÍNEA!
+    # contrasinal = models.CharField(max_length=128) 
+    
+    imaxe_user = models.ImageField(upload_to="users/", null=True, blank=True, help_text="Imaxe de perfil do usuario.")
+    admin = models.BooleanField(default=False, help_text="Indica se o usuario ten rol de administrador personalizado.")
+
+    # Campos de relación ManyToMany:
+    favoritos = models.ManyToManyField('Videoxogo', through='Favorito', related_name='usuarios_favoritos', blank=True)
+    preferencias = models.ManyToManyField('Accesibilidade', through='PreferenciasAccesibilidade', related_name='usuario_preferencias', blank=True)
+
+    # Campos requeridos por AbstractBaseUser para la integración con Django Admin y autenticación:
+    is_active = models.BooleanField(default=True, help_text="Indica se o usuario está activo.")
+    is_staff = models.BooleanField(default=False, help_text="Indica se o usuario pode acceder á área de administración.")
+    date_joined = models.DateTimeField(auto_now_add=True) # Campo común para registrar la fecha de creación
+
+    # Conexión al Manager personalizado:
+    objects = UsuarioManager()
+
+    # Define el campo que se usará como identificador único para el login:
+    USERNAME_FIELD = 'nome' 
+    
+    # Campos adicionales que se pedirán al crear un superusuario (además de USERNAME_FIELD y la contraseña):
+    REQUIRED_FIELDS = ['email'] # Si tu 'email' es un campo que debería ser solicitado al crear superuser
+
+    class Meta:
+        verbose_name = 'Usuario'
+        verbose_name_plural = 'Usuarios'
+        # Puedes añadir db_table = 'nome_da_táboa_usuario' si quieres que la tabla mantenga el nombre antiguo.
+
     def __str__(self):
         return self.nome
 
-    def check_password(self, raw_password):
-        return django_check_password(raw_password, self.contrasinal)
+    # Métodos que ya proporciona AbstractBaseUser, por lo que NO necesitas definirlos:
+    # def check_password(self, raw_password): ...
+    # def save(self, *args, **kwargs): ... (el hashing se hace con user.set_password() antes de guardar)
 
-    def save(self, *args, **kwargs):
-        if self.contrasinal and not self.contrasinal.startswith('pbkdf2_sha256$'):
-            self.contrasinal = make_password(self.contrasinal)
-        super().save(*args, **kwargs)
+    # Métodos para PermissionsMixin (útiles para compatibilidad con el sistema de permisos de Django)
+    def get_full_name(self):
+        return self.nome
+
+    def get_short_name(self):
+        return self.nome
+
 
 class Favorito(models.Model):
     usuario = models.ForeignKey('Usuario',on_delete=models.CASCADE)

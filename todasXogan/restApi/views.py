@@ -9,6 +9,7 @@ from django.contrib.auth.hashers import  check_password
 from django.http import Http404
 from django.contrib.auth import authenticate 
 from rest_framework_simplejwt.tokens import RefreshToken 
+from rest_frameworks.permissions import AllowAny, IsAuthenticatedOrReadOnly
 
 
 @api_view(['GET'])
@@ -21,6 +22,19 @@ def api_home(request, format=None):
 class UsuarioListCreateView(generics.ListCreateAPIView):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
+
+    # --- THIS IS THE KEY CHANGE ---
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.request.method == 'POST':
+            # Allow ANY user to create a new account (POST request)
+            return [AllowAny()]
+        # For other methods (GET, HEAD, OPTIONS), apply the default permission
+        # which you likely want to be IsAuthenticatedOrReadOnly or IsAuthenticated
+        return [IsAuthenticatedOrReadOnly()] # Or [IsAuthenticated()] if only logged-in users can list
+
 
 class UsuarioDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Usuario.objects.all()

@@ -38,23 +38,34 @@ class VideoxogoSerializer(serializers.ModelSerializer):
 class UsuarioSerializer(serializers.ModelSerializer):
     favoritos = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     preferencias = AccesibilidadeSerializer(many=True, read_only=True)
-    contrasinal = serializers.CharField(write_only=True, required=True)
+    password = serializers.CharField(write_only=True, required=True)
     
 
     class Meta:
         model = Usuario
-        fields = ['id', 'nome', 'email', 'contrasinal', 'imaxe_user', 'admin', 'favoritos', 'preferencias']
+        fields = ['id', 'nome', 'email', 'password', 'imaxe_user', 'admin', 'favoritos', 'preferencias']
         extra_kwargs = {
             'email': {'write_only':True},
-            'contrasinal': {'write_only': True}
+            'password': {'write_only': True},
+            'admin': {'read_only' : True}
         }
 
+    # El método create debe usar user.set_password() en el nuevo modelo.
     def create(self, validated_data):
+        # Extrae la contraseña del diccionario validated_data
+        password = validated_data.pop('password', None)
         
-        # Encriptar la contraseña
-        validated_data['contrasinal'] = make_password(validated_data['contrasinal'])
+        # Crea la instancia del usuario SIN la contraseña encriptada aún
+        # El campo 'admin' se puede asignar directamente
+        usuario = Usuario.objects.create(**validated_data)
         
-        return Usuario.objects.create(**validated_data)
+        # Usa el método set_password() del modelo (que viene de AbstractBaseUser)
+        # para hashear y guardar la contraseña de forma segura.
+        if password is not None:
+            usuario.set_password(password)
+            usuario.save() # Guarda los cambios después de establecer la contraseña
+        
+        return usuario
 
 class FavoritoSerializer(serializers.ModelSerializer):
     class Meta:
