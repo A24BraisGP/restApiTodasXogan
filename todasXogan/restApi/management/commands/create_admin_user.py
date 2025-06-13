@@ -7,9 +7,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         User = get_user_model()
-        admin_nome = 'admin' # El nombre de usuario que usarás para el superusuario
+        admin_nome = 'root' # El nombre de usuario que usarás para el superusuario
         admin_email = 'admin@example.com' # El email del superusuario
-        admin_password = 'your_secure_password' # ¡CAMBIA ESTO POR UNA CONTRASEÑA SEGURA!
+        admin_password = 'root123!!' # ¡CAMBIA ESTO POR UNA CONTRASEÑA SEGURA!
 
         # Usa 'nome' para filtrar, ya que es tu USERNAME_FIELD
         if not User.objects.filter(nome=admin_nome).exists():
