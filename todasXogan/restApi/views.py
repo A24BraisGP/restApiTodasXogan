@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth.hashers import  check_password
 from django.http import Http404
-
+from django.contrib.auth import authenticate 
+from rest_framework_simplejwt.tokens import RefreshToken 
 
 
 @api_view(['GET'])
@@ -100,35 +101,63 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = UsuarioSerializer
 
 class LoginView(APIView):
-    def post(self, request):
-        nome = request.data.get('nome')
-        contrasinal = request.data.get('contrasinal')
-        
+    # This view doesn't require authentication for users to log in
+    permission_classes = [] 
+
+    def post(self, request, *args, **kwargs):
+        # 1. Get credentials from the request body.
+        # Make sure field names ('nome', 'contrasinal') match what your frontend sends.
+        nome = request.data.get('nome')         # Your username field
+        contrasinal = request.data.get('contrasinal') # Your password field
+
         if not nome or not contrasinal:
-            return Response({
-                'error': 'Por favor, proporciona nombre de usuario y contraseña'
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {'error': 'Faltan nome e contrasinal.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         
-        try:
-            usuario = Usuario.objects.get(nome=nome)
-            if check_password(contrasinal, usuario.contrasinal):
-                serializer = UsuarioSerializer(usuario)
-                return Response({
-                    'usuario': serializer.data,
-                    'mensaje': 'Login exitoso'
-                }, status=status.HTTP_200_OK)
-            else:
-                return Response({
-                    'error': 'Contraseña incorrecta'
-                }, status=status.HTTP_401_UNAUTHORIZED)
-        except Usuario.DoesNotExist:
+        # 2. Authenticate the user using Django's `authenticate` function.
+        # This function handles:
+        # - Looking up the user by `username` (which is 'nome' in your case, configured via USERNAME_FIELD in your custom model).
+        # - Verifying the `password` against the stored hash.
+        # - Checking if the user is active (`is_active = True`).
+        # It returns the User object on success, or None on failure.
+        user = authenticate(request, username=nome, password=contrasinal)
+
+        if user is not None:
+            # 3. If authentication is successful, generate JWT tokens.
+            try:
+                # Create a refresh token for the authenticated user
+                refresh = RefreshToken.for_user(user)
+                # Get the access token string from the refresh token
+                access_token = str(refresh.access_token)
+                # Get the refresh token string
+                refresh_token = str(refresh)
+
+            except Exception as e:
+                # Catch potential errors during token generation (e.g., misconfiguration of simplejwt)
+                return Response(
+                    {'error': f'Erro interno ao xerar tokens de sesión: {str(e)}'}, # Using Galician as per "Faltan nome e contrasinal"
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
+            # 4. Serialize the user data to include in the response.
+            serializer = UsuarioSerializer(user)
+
+            # 5. Return a successful 200 OK response with tokens and user data.
             return Response({
-                'error': 'Usuario no encontrado'
-            }, status=status.HTTP_401_UNAUTHORIZED)
-        except Exception as e:
-            return Response({
-                'error': f'Error en el servidor: {str(e)}'
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                'access': access_token,
+                'refresh': refresh_token,
+                'usuario': serializer.data,  # User data for the frontend
+                'mensaje': 'Login exitoso'   # Success message
+            }, status=status.HTTP_200_OK)
+        else:
+            # 6. If `authenticate` returns None, credentials are invalid.
+            # Return a 401 Unauthorized response with a generic error message for security.
+            return Response(
+                {'error': 'Credenciais inválidas. Usuario ou contrasinal incorrectos.'}, # Using Galician
+                status=status.HTTP_401_UNAUTHORIZED
+            )
 
 @api_view(['GET'])
 def check_nome_usuario(request, nome):

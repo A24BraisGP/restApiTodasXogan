@@ -45,6 +45,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
         model = Usuario
         fields = ['id', 'nome', 'email', 'contrasinal', 'imaxe_user', 'admin', 'favoritos', 'preferencias']
         extra_kwargs = {
+            'email': {'write_only':True},
             'contrasinal': {'write_only': True}
         }
 
