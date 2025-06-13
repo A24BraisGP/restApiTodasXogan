@@ -16,6 +16,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         attrs['username'] = attrs.get(self.username_field)              
         data = super().validate(attrs)
+
         return data
 class XeneroSerializer(serializers.ModelSerializer):
     class Meta:
