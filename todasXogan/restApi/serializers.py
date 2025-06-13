@@ -7,6 +7,16 @@ from .models import (
     PropostaVideoxogoPlataforma, PropostaVideoxogoAccesibilidade
 )
 from django.contrib.auth.hashers import make_password
+
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    username_field = 'nome' 
+
+    def validate(self, attrs):
+        attrs['username'] = attrs.get(self.username_field)              
+        data = super().validate(attrs)
+        return data
 class XeneroSerializer(serializers.ModelSerializer):
     class Meta:
         model = Xenero

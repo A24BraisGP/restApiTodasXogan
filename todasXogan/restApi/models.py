@@ -95,22 +95,6 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     nome = models.CharField(max_length=100, unique=True, help_text="Nome de usuario único.")
     email = models.EmailField(max_length=250, unique=True, help_text="Enderezo de correo electrónico único.")
     
-    # Campo 'contrasinal':
-    # ¡IMPORTANTE! El campo 'password' ya lo proporciona AbstractBaseUser internamente.
-    # NO DEBES DEFINIR 'contrasinal' aquí si quieres que Django maneje la contraseña principal.
-    # Si lo dejas, Django lo ignorará para la autenticación principal,
-    # lo cual causará problemas.
-    #
-    # Si por alguna razón histórica o de compatibilidad SÓLO quieres que se llame 'contrasinal' en la DB
-    # y que Django lo use, DEBERÍAS RENOMBRAR la columna de la base de datos a 'password'
-    # o usar un campo proxy, lo cual es más complejo.
-    #
-    # La mejor práctica es que tu modelo ya NO TENGA un campo 'contrasinal'.
-    # Django usará el campo `password` (que no ves explícitamente pero está en la herencia).
-    # Cuando hagas `user.set_password(raw_password)`, guardará el hash en ese campo `password`.
-    #
-    # Por lo tanto, ¡ELIMINA LA SIGUIENTE LÍNEA!
-    # contrasinal = models.CharField(max_length=128) 
     
     imaxe_user = models.ImageField(upload_to="users/", null=True, blank=True, help_text="Imaxe de perfil do usuario.")
     admin = models.BooleanField(default=False, help_text="Indica se o usuario ten rol de administrador personalizado.")
