@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator
 from django import forms
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth.hashers import make_password, check_password
+from django.utils.translation import gettext_lazy as _ 
 
 
 # Create your models here.
@@ -95,6 +96,9 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     nome = models.CharField(max_length=100, unique=True, help_text="Nome de usuario único.")
     email = models.EmailField(max_length=250, unique=True, help_text="Enderezo de correo electrónico único.")
     
+       # ¡ESTOS SON LOS CAMPOS QUE FALTAN Y DEBES AÑADIR!
+    password = models.CharField(_("password"), max_length=128)
+    last_login = models.DateTimeField(_("last login"), blank=True, null=True)
     
     imaxe_user = models.ImageField(upload_to="users/", null=True, blank=True, help_text="Imaxe de perfil do usuario.")
     admin = models.BooleanField(default=False, help_text="Indica se o usuario ten rol de administrador personalizado.")
@@ -125,10 +129,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.nome
 
-    # Métodos que ya proporciona AbstractBaseUser, por lo que NO necesitas definirlos:
-    # def check_password(self, raw_password): ...
-    # def save(self, *args, **kwargs): ... (el hashing se hace con user.set_password() antes de guardar)
-
+ 
     # Métodos para PermissionsMixin (útiles para compatibilidad con el sistema de permisos de Django)
     def get_full_name(self):
         return self.nome

@@ -1,19 +1,20 @@
-import os
-from django.core.management.base import BaseCommand
+# todasXogan/restApi/management/commands/create_admin_user.py
 from django.contrib.auth import get_user_model
+from django.core.management.base import BaseCommand
 
 class Command(BaseCommand):
-    help = 'Crea un superusuario desde entorno o valores por defecto si no existe'
+    help = 'Creates a superuser if it does not exist'
 
-    def handle(self, *args, **kwargs):
+    def handle(self, *args, **options):
         User = get_user_model()
+        admin_nome = 'admin' # El nombre de usuario que usarás para el superusuario
+        admin_email = 'admin@example.com' # El email del superusuario
+        admin_password = 'your_secure_password' # ¡CAMBIA ESTO POR UNA CONTRASEÑA SEGURA!
 
-        username = os.environ.get('DJANGO_SUPERUSER_USERNAME', 'root')
-        email = os.environ.get('DJANGO_SUPERUSER_EMAIL', 'admin@todasxogan.com')
-        password = os.environ.get('DJANGO_SUPERUSER_PASSWORD', 'admin123!!')
-
-        if not User.objects.filter(nome=username).exists():
-            User.objects.create_superuser(nome=username, email=email, password=password)
-            self.stdout.write(self.style.SUCCESS(f'Superusuario "{username}" creado.'))
+        # Usa 'nome' para filtrar, ya que es tu USERNAME_FIELD
+        if not User.objects.filter(nome=admin_nome).exists():
+            # Crea el superusuario usando 'nome' y 'email'
+            User.objects.create_superuser(nome=admin_nome, email=admin_email, password=admin_password)
+            self.stdout.write(self.style.SUCCESS(f'Successfully created superuser: {admin_nome}'))
         else:
-            self.stdout.write(f'Superusuario "{username}" ya existe.')
+            self.stdout.write(self.style.WARNING(f'Superuser {admin_nome} already exists.'))
