@@ -76,7 +76,6 @@ CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     'https://todas-xogan-frontend.vercel.app',
-    'https://restapitodasxogan.onrender.com',
     'http://localhost:5173', 
     'http://127.0.0.1:5173', 
 ]
@@ -160,24 +159,13 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
+# # Static files (CSS, JavaScript, Images)
+# # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-# This production code might break development mode, so we check whether we're in DEBUG mode
-if not DEBUG:
-    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
-    # and renames the files with unique names for each version to support long-term caching
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-else:
-    # In development, serve static files from the 'static' directory within your project
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_URL = 'static/'
     
-MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/media_files/uploads' 
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = '/var/media_files/uploads' 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -236,18 +224,17 @@ SIMPLE_JWT = {
 }
 
 
-
 # AWS S3 Configuration
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='eu-north-1') # Confirma esta región
+AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='eu-north-1')
 
 AWS_DEFAULT_ACL = 'public-read'
 AWS_S3_FILE_OVERWRITE = False
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
-# --- CONFIGURACIÓN PARA S3 (ESTO DEBE SER SIEMPRE ASÍ, INDEPENDIENTEMENTE DE DEBUG) ---
+# --- CONFIGURACIÓN PRINCIPAL DE ARCHIVOS (MEDIA y STATIC) ---
 # Default storage para archivos de medios (imágenes subidas por usuarios)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
@@ -255,3 +242,12 @@ MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 # Configuración para archivos estáticos (CSS, JS, imágenes de templates, de DRF, admin)
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+
+# STATIC_ROOT es donde `collectstatic` recolecta archivos.
+# Aunque S3StaticStorage los suba directamente a S3,
+# este path es un requerimiento de Django para `collectstatic`.
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# MEDIA_ROOT no se usará en producción con S3, pero es un campo requerido para que Django no se queje.
+# Puedes apuntarlo a una ruta temporal o simplemente mantenerlo como una ruta por si acaso.
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles') # Un nombre más claro que /var/media_files/uploads
