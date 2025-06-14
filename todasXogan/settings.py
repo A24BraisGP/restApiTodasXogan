@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-*5^8%e^ikrz=^*-mok7nuay9^=)7uhq5_@&vaf9j=t5s@$hkf2')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 #'RENDER' not in os.environ
 
 ALLOWED_HOSTS = ['restapitodasxogan.onrender.com', 'localhost', '127.0.0.1']
@@ -124,7 +124,7 @@ WSGI_APPLICATION = 'todasXogan.wsgi.application'
 
 DATABASE_URL = config('DATABASE_URL')
 DATABASES = {
-    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600,ssl_require=True) 
+    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600) 
 }
 
 
@@ -228,7 +228,7 @@ SIMPLE_JWT = {
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='eu-north-1')
+AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME')
 
 AWS_DEFAULT_ACL = 'public-read'
 AWS_S3_FILE_OVERWRITE = False
