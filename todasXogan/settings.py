@@ -232,20 +232,18 @@ AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME')
 
 AWS_DEFAULT_ACL = 'public-read'
 AWS_S3_FILE_OVERWRITE = False
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/' # La URL base donde se servirán tus archivos estáticos desde S3
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Directorio local donde collectstatic recolectará los archivos
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/' 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 
 
-# Para archivos de medios (imágenes subidas por usuarios)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/' # La URL base donde se servirán tus archivos de medios desde S3
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Directorio local (no usado en S3 para subidas, pero necesario para Django)
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/' 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
 
-# Opcional: para evitar que los archivos se descarguen automáticamente en algunos navegadores
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400', # Por ejemplo, para un día
 }
