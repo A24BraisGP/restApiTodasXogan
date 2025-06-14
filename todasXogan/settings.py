@@ -238,9 +238,7 @@ AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/' # La URL base donde se servirán tus archivos estáticos desde S3
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Directorio local donde collectstatic recolectará los archivos
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'), # Tus directorios de static locales (ej: tu_app/static)
-]
+
 
 # Para archivos de medios (imágenes subidas por usuarios)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
