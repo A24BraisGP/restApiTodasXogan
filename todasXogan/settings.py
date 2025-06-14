@@ -251,3 +251,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Directorio local (no usado en S3 
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400', # Por ejemplo, para un día
 }
+
+# Para pechala sesión cando se peche o browser
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
