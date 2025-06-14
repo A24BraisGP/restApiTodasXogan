@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-*5^8%e^ikrz=^*-mok7nuay9^=)7uhq5_@&vaf9j=t5s@$hkf2')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False') == 'True' 
+DEBUG = False
 #'RENDER' not in os.environ
 
 ALLOWED_HOSTS = ['restapitodasxogan.onrender.com', 'localhost', '127.0.0.1']
@@ -234,20 +234,20 @@ AWS_DEFAULT_ACL = 'public-read'
 AWS_S3_FILE_OVERWRITE = False
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
-# --- CONFIGURACIÓN PRINCIPAL DE ARCHIVOS (MEDIA y STATIC) ---
-# Default storage para archivos de medios (imágenes subidas por usuarios)
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/' # La URL base donde se servirán tus archivos estáticos desde S3
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Directorio local donde collectstatic recolectará los archivos
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'), # Tus directorios de static locales (ej: tu_app/static)
+]
+
+# Para archivos de medios (imágenes subidas por usuarios)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/' # La URL base donde se servirán tus archivos de medios desde S3
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Directorio local (no usado en S3 para subidas, pero necesario para Django)
 
-# Configuración para archivos estáticos (CSS, JS, imágenes de templates, de DRF, admin)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-
-# STATIC_ROOT es donde `collectstatic` recolecta archivos.
-# Aunque S3StaticStorage los suba directamente a S3,
-# este path es un requerimiento de Django para `collectstatic`.
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# MEDIA_ROOT no se usará en producción con S3, pero es un campo requerido para que Django no se queje.
-# Puedes apuntarlo a una ruta temporal o simplemente mantenerlo como una ruta por si acaso.
-MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles') # Un nombre más claro que /var/media_files/uploads
+# Opcional: para evitar que los archivos se descarguen automáticamente en algunos navegadores
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400', # Por ejemplo, para un día
+}
