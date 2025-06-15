@@ -110,7 +110,7 @@ class PropostaVideoxogoSerializer(serializers.ModelSerializer):
     class Meta:
         model = PropostaVideoxogo
         fields = '__all__'
-        read_only_fields = ('estado', 'data_creacion', 'admin_revisor')
+        read_only_fields = ('data_creacion', 'admin_revisor')
 
     def create(self, validated_data):
         xenero_data = validated_data.pop('xenero', [])
