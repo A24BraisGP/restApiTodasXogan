@@ -41,6 +41,7 @@ urlpatterns = [
     path('favoritos/',views.FavoritoListCreateView.as_view()),
     path('favoritos/delete/',views.FavoritoDeleteView.as_view()),
     path('accesibilidades/',views.AccesibilidadeListCreateView.as_view()),
+    path('accesibilidades/<int:pk>/',views.AccesibilidadeDetailView.as_view()),
     path('register/', views.RegisterView.as_view(), name='register'),
     path('usuarios/check-nome/<str:nome>/', check_nome_usuario, name='check-nome-usuario'),
     path('propostas/', PropostaVideoxogoListCreateView.as_view(), name='proposta-list-create'),
