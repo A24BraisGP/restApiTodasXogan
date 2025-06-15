@@ -207,7 +207,7 @@ class PropostaVideoxogoRevisionView(generics.UpdateAPIView):
 
 
     def get_queryset(self):
-        return PropostaVideoxogo.objects.filter(estado='PENDENTE')
+        return PropostaVideoxogo.objects.all()
 
 class AccesibilidadeDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Favorito.objects.all()
