@@ -1,11 +1,5 @@
 from rest_framework import serializers
-from .models import (
-    Videoxogo, Usuario, Xenero, Plataforma, 
-    Favorito, Comentario, VideoxogoAccesibilidade, 
-    Accesibilidade, PreferenciasAccesibilidade,
-    PropostaVideoxogo, PropostaVideoxogoXenero,
-    PropostaVideoxogoPlataforma, PropostaVideoxogoAccesibilidade
-)
+from .models import *
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 

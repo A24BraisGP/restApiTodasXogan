@@ -19,12 +19,6 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from . import views 
-from .views import (
-    check_nome_usuario,
-    PropostaVideoxogoListCreateView,
-    PropostaVideoxogoDetailView,
-    PropostaVideoxogoRevisionView,
-)
 
 urlpatterns = [
     path('',views.api_home, name='api-home'),
@@ -43,8 +37,10 @@ urlpatterns = [
     path('accesibilidades/',views.AccesibilidadeListCreateView.as_view()),
     path('accesibilidades/<int:pk>/',views.AccesibilidadeDetailView.as_view()),
     path('register/', views.RegisterView.as_view(), name='register'),
-    path('usuarios/check-nome/<str:nome>/', check_nome_usuario, name='check-nome-usuario'),
-    path('propostas/', PropostaVideoxogoListCreateView.as_view(), name='proposta-list-create'),
-    path('propostas/<int:pk>/', PropostaVideoxogoDetailView.as_view(), name='proposta-detail'),
-    path('propostas/<int:pk>/revision/', PropostaVideoxogoRevisionView.as_view(), name='proposta-revision'),
+    path('usuarios/check-nome/<str:nome>/', views.check_nome_usuario, name='check-nome-usuario'),
+    path('propostas/', views.PropostaVideoxogoListCreateView.as_view(), name='proposta-list-create'),
+    path('propostas/<int:pk>/', views.PropostaVideoxogoDetailView.as_view(), name='proposta-detail'),
+    path('propostas/<int:pk>/revision/', views.PropostaVideoxogoRevisionView.as_view(), name='proposta-revision'),
+    path("comentarios/", views.ComentarioListCreateView.as_view(), name="comentarios"),
+    path("comentarios/<int:pk>", views.ComentarioDetailView.as_view(), name="comentario-detail")
 ]  
