@@ -254,3 +254,4 @@ AWS_S3_OBJECT_PARAMETERS = {
 
 # Para pechala sesión cando se peche o browser
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 30*60

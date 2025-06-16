@@ -195,7 +195,7 @@ class PropostaVideoxogo(models.Model):
     data_creacion = models.DateTimeField(auto_now_add=True)
     desarrolladora = models.CharField(max_length=250, null=True, blank=True)
     estado = models.CharField(max_length=10, default='PENDENTE')
-    caratula = models.ImageField(upload_to="propostas", null=True, blank=True)
+    caratula = models.ImageField(upload_to="games/", null=True, blank=True)
     alt = models.CharField(max_length=250, null=True, blank=True)
     xenero = models.ManyToManyField('Xenero', through='PropostaVideoxogoXenero', related_name='propostas_xenero',null=True,blank=True)
     plataforma = models.ManyToManyField('Plataforma', through='PropostaVideoxogoPlataforma', related_name='propostas_plataforma',null=True,blank=True)
