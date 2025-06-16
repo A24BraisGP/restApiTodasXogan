@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from . import views 
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 
 urlpatterns = [
     path('',views.api_home, name='api-home'),
@@ -42,5 +43,11 @@ urlpatterns = [
     path('propostas/<int:pk>/', views.PropostaVideoxogoDetailView.as_view(), name='proposta-detail'),
     path('propostas/<int:pk>/revision/', views.PropostaVideoxogoRevisionView.as_view(), name='proposta-revision'),
     path("comentarios/", views.ComentarioListCreateView.as_view(), name="comentarios"),
-    path("comentarios/<int:pk>", views.ComentarioDetailView.as_view(), name="comentario-detail")
+    path("comentarios/<int:pk>", views.ComentarioDetailView.as_view(), name="comentario-detail"),
+  
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+  
+    path('schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+  
+    path('schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]  

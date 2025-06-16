@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'allauth.socialaccount',
     'storages',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -177,8 +178,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-     'DEFAULT_PERMISSION_CLASSES':
-        ['rest_framework.permissions.IsAuthenticatedOrReadOnly',]
+    'DEFAULT_PERMISSION_CLASSES':
+        ['rest_framework.permissions.IsAuthenticatedOrReadOnly',],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 AUTH_USER_MODEL =  'restApi.Usuario'
 
@@ -255,3 +257,11 @@ AWS_S3_OBJECT_PARAMETERS = {
 # Para pechala sesión cando se peche o browser
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 30*60
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Your Project API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}

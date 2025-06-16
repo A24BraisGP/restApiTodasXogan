@@ -48,14 +48,7 @@ class VideoxogoListCreateView(generics.ListCreateAPIView):
     parser_classes= (MultiPartParser,FormParser,)
     
     def create(self, request, *args, **kwargs):
-            # --- IMPRIME ESTO PARA DEPURAR ---
-            print("\n--- INICIO DEPURACIÓN VIDEOGOXO CREATE ---")
-            print("request.data:", request.data)
-            print("request.FILES:", request.FILES)
-            print("--- FIN DEPURACIÓN VIDEOGOXO CREATE ---\n")
-            # --- FIN IMPRESIONES DE DEPURACIÓN ---
-
-            # Lógica original para manejar la creación
+          
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
@@ -228,3 +221,4 @@ class PropostaVideoxogoRevisionView(generics.UpdateAPIView):
 class AccesibilidadeDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Favorito.objects.all()
     serializer_class = AccesibilidadeSerializer
+

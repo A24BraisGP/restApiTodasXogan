@@ -1,0 +1,1709 @@
+openapi: 3.0.3
+info:
+  title: Your Project API
+  version: 1.0.0
+  description: Your project description
+paths:
+  /api/:
+    get:
+      operationId: root_retrieve
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/accesibilidades/:
+    get:
+      operationId: accesibilidades_list
+      tags:
+      - accesibilidades
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Accesibilidade'
+          description: ''
+    post:
+      operationId: accesibilidades_create
+      tags:
+      - accesibilidades
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Accesibilidade'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Accesibilidade'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Accesibilidade'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accesibilidade'
+          description: ''
+  /api/accesibilidades/{id}/:
+    get:
+      operationId: accesibilidades_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - accesibilidades
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accesibilidade'
+          description: ''
+    put:
+      operationId: accesibilidades_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - accesibilidades
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Accesibilidade'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Accesibilidade'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Accesibilidade'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accesibilidade'
+          description: ''
+    patch:
+      operationId: accesibilidades_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - accesibilidades
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAccesibilidade'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAccesibilidade'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAccesibilidade'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accesibilidade'
+          description: ''
+    delete:
+      operationId: accesibilidades_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - accesibilidades
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/comentarios/:
+    get:
+      operationId: comentarios_list
+      tags:
+      - comentarios
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comentario'
+          description: ''
+    post:
+      operationId: comentarios_create
+      tags:
+      - comentarios
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comentario'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Comentario'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Comentario'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comentario'
+          description: ''
+  /api/comentarios/{id}:
+    get:
+      operationId: comentarios_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - comentarios
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comentario'
+          description: ''
+    put:
+      operationId: comentarios_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - comentarios
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comentario'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Comentario'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Comentario'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comentario'
+          description: ''
+    patch:
+      operationId: comentarios_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - comentarios
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedComentario'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedComentario'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedComentario'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comentario'
+          description: ''
+    delete:
+      operationId: comentarios_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - comentarios
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/favoritos/:
+    get:
+      operationId: favoritos_list
+      tags:
+      - favoritos
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Favorito'
+          description: ''
+    post:
+      operationId: favoritos_create
+      tags:
+      - favoritos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Favorito'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Favorito'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Favorito'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Favorito'
+          description: ''
+  /api/favoritos/{id}:
+    get:
+      operationId: favoritos_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - favoritos
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Favorito'
+          description: ''
+    put:
+      operationId: favoritos_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - favoritos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Favorito'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Favorito'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Favorito'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Favorito'
+          description: ''
+    patch:
+      operationId: favoritos_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - favoritos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFavorito'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFavorito'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFavorito'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Favorito'
+          description: ''
+    delete:
+      operationId: favoritos_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - favoritos
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/favoritos/delete/:
+    delete:
+      operationId: favoritos_delete_destroy
+      tags:
+      - favoritos
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/plataformas/:
+    get:
+      operationId: plataformas_list
+      tags:
+      - plataformas
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plataforma'
+          description: ''
+    post:
+      operationId: plataformas_create
+      tags:
+      - plataformas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Plataforma'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Plataforma'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Plataforma'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plataforma'
+          description: ''
+  /api/plataformas/{id}:
+    get:
+      operationId: plataformas_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - plataformas
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plataforma'
+          description: ''
+    put:
+      operationId: plataformas_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - plataformas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Plataforma'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Plataforma'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Plataforma'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plataforma'
+          description: ''
+    patch:
+      operationId: plataformas_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - plataformas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPlataforma'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPlataforma'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPlataforma'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plataforma'
+          description: ''
+    delete:
+      operationId: plataformas_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - plataformas
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/propostas/:
+    get:
+      operationId: propostas_list
+      tags:
+      - propostas
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PropostaVideoxogo'
+          description: ''
+    post:
+      operationId: propostas_create
+      tags:
+      - propostas
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PropostaVideoxogo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PropostaVideoxogo'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropostaVideoxogo'
+          description: ''
+  /api/propostas/{id}/:
+    get:
+      operationId: propostas_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - propostas
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropostaVideoxogo'
+          description: ''
+    put:
+      operationId: propostas_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - propostas
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PropostaVideoxogo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PropostaVideoxogo'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropostaVideoxogo'
+          description: ''
+    patch:
+      operationId: propostas_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - propostas
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPropostaVideoxogo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPropostaVideoxogo'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropostaVideoxogo'
+          description: ''
+    delete:
+      operationId: propostas_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - propostas
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/propostas/{id}/revision/:
+    put:
+      operationId: propostas_revision_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - propostas
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PropostaVideoxogo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PropostaVideoxogo'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropostaVideoxogo'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropostaVideoxogo'
+          description: ''
+    patch:
+      operationId: propostas_revision_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - propostas
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPropostaVideoxogo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPropostaVideoxogo'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPropostaVideoxogo'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropostaVideoxogo'
+          description: ''
+  /api/register/:
+    post:
+      operationId: register_create
+      tags:
+      - register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+          description: ''
+  /api/usuarios/:
+    get:
+      operationId: usuarios_list
+      tags:
+      - usuarios
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Usuario'
+          description: ''
+    post:
+      operationId: usuarios_create
+      tags:
+      - usuarios
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+          description: ''
+  /api/usuarios/{id}/:
+    get:
+      operationId: usuarios_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - usuarios
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+          description: ''
+    put:
+      operationId: usuarios_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - usuarios
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+          description: ''
+    patch:
+      operationId: usuarios_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - usuarios
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUsuario'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUsuario'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUsuario'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+          description: ''
+    delete:
+      operationId: usuarios_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - usuarios
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/usuarios/check-nome/{nome}/:
+    get:
+      operationId: usuarios_check_nome_retrieve
+      parameters:
+      - in: path
+        name: nome
+        schema:
+          type: string
+        required: true
+      tags:
+      - usuarios
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/usuarios/login/:
+    post:
+      operationId: usuarios_login_create
+      tags:
+      - usuarios
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/videoxogos/:
+    get:
+      operationId: videoxogos_list
+      tags:
+      - videoxogos
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Videoxogo'
+          description: ''
+    post:
+      operationId: videoxogos_create
+      tags:
+      - videoxogos
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Videoxogo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Videoxogo'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Videoxogo'
+          description: ''
+  /api/videoxogos/{id}/:
+    get:
+      operationId: videoxogos_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - videoxogos
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Videoxogo'
+          description: ''
+    put:
+      operationId: videoxogos_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - videoxogos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Videoxogo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Videoxogo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Videoxogo'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Videoxogo'
+          description: ''
+    patch:
+      operationId: videoxogos_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - videoxogos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedVideoxogo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedVideoxogo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedVideoxogo'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Videoxogo'
+          description: ''
+    delete:
+      operationId: videoxogos_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - videoxogos
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/xeneros/:
+    get:
+      operationId: xeneros_list
+      tags:
+      - xeneros
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Xenero'
+          description: ''
+    post:
+      operationId: xeneros_create
+      tags:
+      - xeneros
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Xenero'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Xenero'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Xenero'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Xenero'
+          description: ''
+  /api/xeneros/{id}/:
+    get:
+      operationId: xeneros_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - xeneros
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Xenero'
+          description: ''
+    put:
+      operationId: xeneros_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - xeneros
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Xenero'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Xenero'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Xenero'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Xenero'
+          description: ''
+    patch:
+      operationId: xeneros_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - xeneros
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedXenero'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedXenero'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedXenero'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Xenero'
+          description: ''
+    delete:
+      operationId: xeneros_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - xeneros
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    Accesibilidade:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nome_accesibilidade:
+          type: string
+          maxLength: 250
+      required:
+      - id
+      - nome_accesibilidade
+    Comentario:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        comentario:
+          type: string
+          maxLength: 1000
+        likes:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        dislikes:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        usuario:
+          type: integer
+        videoxogo:
+          type: integer
+      required:
+      - comentario
+      - id
+      - usuario
+      - videoxogo
+    Favorito:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        usuario:
+          type: integer
+        videoxogo:
+          type: integer
+      required:
+      - id
+      - usuario
+      - videoxogo
+    IdadeRecomendadaEnum:
+      enum:
+      - 3
+      - 6
+      - 9
+      - 12
+      - 16
+      - 18
+      type: integer
+      description: |-
+        * `3` - 3+
+        * `6` - 6+
+        * `9` - 9+
+        * `12` - 12+
+        * `16` - 16+
+        * `18` - 18+
+    PatchedAccesibilidade:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nome_accesibilidade:
+          type: string
+          maxLength: 250
+    PatchedComentario:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        comentario:
+          type: string
+          maxLength: 1000
+        likes:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        dislikes:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        usuario:
+          type: integer
+        videoxogo:
+          type: integer
+    PatchedFavorito:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        usuario:
+          type: integer
+        videoxogo:
+          type: integer
+    PatchedPlataforma:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        plataforma:
+          type: string
+          maxLength: 250
+    PatchedPropostaVideoxogo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        xenero:
+          type: array
+          items:
+            type: integer
+        plataforma:
+          type: array
+          items:
+            type: integer
+        accesibilidades:
+          type: array
+          items:
+            type: integer
+        usuario:
+          allOf:
+          - $ref: '#/components/schemas/Usuario'
+          readOnly: true
+        admin_revisor:
+          allOf:
+          - $ref: '#/components/schemas/Usuario'
+          readOnly: true
+        titulo:
+          type: string
+          maxLength: 100
+        descricion:
+          type: string
+        prezo:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        idade_recomendada:
+          allOf:
+          - $ref: '#/components/schemas/IdadeRecomendadaEnum'
+          minimum: -2147483648
+          maximum: 2147483647
+        data_creacion:
+          type: string
+          format: date-time
+          readOnly: true
+        desarrolladora:
+          type: string
+          nullable: true
+          maxLength: 250
+        estado:
+          type: string
+          maxLength: 10
+        caratula:
+          type: string
+          format: uri
+          nullable: true
+        alt:
+          type: string
+          nullable: true
+          maxLength: 250
+        usuario_id:
+          type: integer
+          nullable: true
+    PatchedUsuario:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nome:
+          type: string
+          description: Nome de usuario único.
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          writeOnly: true
+          description: Enderezo de correo electrónico único.
+          maxLength: 250
+        password:
+          type: string
+          writeOnly: true
+        imaxe_user:
+          type: string
+          format: uri
+          nullable: true
+          description: Imaxe de perfil do usuario.
+        admin:
+          type: boolean
+          readOnly: true
+          description: Indica se o usuario ten rol de administrador personalizado.
+        favoritos:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        preferencias:
+          type: array
+          items:
+            $ref: '#/components/schemas/Accesibilidade'
+          readOnly: true
+    PatchedVideoxogo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        xenero:
+          type: array
+          items:
+            type: integer
+        plataforma:
+          type: array
+          items:
+            type: integer
+        accesibilidades:
+          type: array
+          items:
+            type: integer
+        titulo:
+          type: string
+          maxLength: 250
+        descricion:
+          type: string
+          maxLength: 1000
+        prezo:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,2}(?:\.\d{0,2})?$
+        idade_recomendada:
+          allOf:
+          - $ref: '#/components/schemas/IdadeRecomendadaEnum'
+          minimum: -2147483648
+          maximum: 2147483647
+        desarrolladora:
+          type: string
+          nullable: true
+          maxLength: 250
+        caratula:
+          type: string
+          format: uri
+          nullable: true
+        alt:
+          type: string
+          nullable: true
+          description: Descripción alternativa de la carátula para accesibilidad
+          maxLength: 250
+    PatchedXenero:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        xenero:
+          type: string
+          maxLength: 250
+    Plataforma:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        plataforma:
+          type: string
+          maxLength: 250
+      required:
+      - id
+      - plataforma
+    PropostaVideoxogo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        xenero:
+          type: array
+          items:
+            type: integer
+        plataforma:
+          type: array
+          items:
+            type: integer
+        accesibilidades:
+          type: array
+          items:
+            type: integer
+        usuario:
+          allOf:
+          - $ref: '#/components/schemas/Usuario'
+          readOnly: true
+        admin_revisor:
+          allOf:
+          - $ref: '#/components/schemas/Usuario'
+          readOnly: true
+        titulo:
+          type: string
+          maxLength: 100
+        descricion:
+          type: string
+        prezo:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        idade_recomendada:
+          allOf:
+          - $ref: '#/components/schemas/IdadeRecomendadaEnum'
+          minimum: -2147483648
+          maximum: 2147483647
+        data_creacion:
+          type: string
+          format: date-time
+          readOnly: true
+        desarrolladora:
+          type: string
+          nullable: true
+          maxLength: 250
+        estado:
+          type: string
+          maxLength: 10
+        caratula:
+          type: string
+          format: uri
+          nullable: true
+        alt:
+          type: string
+          nullable: true
+          maxLength: 250
+        usuario_id:
+          type: integer
+          nullable: true
+      required:
+      - admin_revisor
+      - data_creacion
+      - descricion
+      - id
+      - idade_recomendada
+      - prezo
+      - titulo
+      - usuario
+    Usuario:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nome:
+          type: string
+          description: Nome de usuario único.
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          writeOnly: true
+          description: Enderezo de correo electrónico único.
+          maxLength: 250
+        password:
+          type: string
+          writeOnly: true
+        imaxe_user:
+          type: string
+          format: uri
+          nullable: true
+          description: Imaxe de perfil do usuario.
+        admin:
+          type: boolean
+          readOnly: true
+          description: Indica se o usuario ten rol de administrador personalizado.
+        favoritos:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        preferencias:
+          type: array
+          items:
+            $ref: '#/components/schemas/Accesibilidade'
+          readOnly: true
+      required:
+      - admin
+      - email
+      - favoritos
+      - id
+      - nome
+      - password
+      - preferencias
+    Videoxogo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        xenero:
+          type: array
+          items:
+            type: integer
+        plataforma:
+          type: array
+          items:
+            type: integer
+        accesibilidades:
+          type: array
+          items:
+            type: integer
+        titulo:
+          type: string
+          maxLength: 250
+        descricion:
+          type: string
+          maxLength: 1000
+        prezo:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,2}(?:\.\d{0,2})?$
+        idade_recomendada:
+          allOf:
+          - $ref: '#/components/schemas/IdadeRecomendadaEnum'
+          minimum: -2147483648
+          maximum: 2147483647
+        desarrolladora:
+          type: string
+          nullable: true
+          maxLength: 250
+        caratula:
+          type: string
+          format: uri
+          nullable: true
+        alt:
+          type: string
+          nullable: true
+          description: Descripción alternativa de la carátula para accesibilidad
+          maxLength: 250
+      required:
+      - descricion
+      - id
+      - prezo
+      - titulo
+    Xenero:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        xenero:
+          type: string
+          maxLength: 250
+      required:
+      - id
+      - xenero
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
