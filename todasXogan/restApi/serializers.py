@@ -106,24 +106,6 @@ class PropostaVideoxogoSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ('data_creacion', 'admin_revisor')
 
-    def create(self, validated_data):
-        xenero_data = validated_data.pop('xenero', [])
-        plataforma_data = validated_data.pop('plataforma', [])
-        accesibilidades_data = validated_data.pop('accesibilidades', [])
-        
-        proposta = PropostaVideoxogo.objects.create(**validated_data)
-        
-        for xenero in xenero_data:
-            PropostaVideoxogoXenero.objects.create(proposta=proposta, xenero=xenero)
-            
-        for plataforma in plataforma_data:
-            PropostaVideoxogoPlataforma.objects.create(proposta=proposta, plataforma=plataforma)
-            
-        for accesibilidade in accesibilidades_data:
-            PropostaVideoxogoAccesibilidade.objects.create(proposta=proposta, accesibilidade=accesibilidade)
-            
-        return proposta
-
 class PropostaVideoxogoXeneroSerializer(serializers.ModelSerializer):
     class Meta:
         model = PropostaVideoxogoXenero
