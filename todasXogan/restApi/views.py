@@ -46,6 +46,22 @@ class VideoxogoListCreateView(generics.ListCreateAPIView):
     queryset = Videoxogo.objects.all()
     serializer_class = VideoxogoSerializer
     parser_classes= (MultiPartParser,FormParser,)
+    
+    def create(self, request, *args, **kwargs):
+            # --- IMPRIME ESTO PARA DEPURAR ---
+            print("\n--- INICIO DEPURACIÓN VIDEOGOXO CREATE ---")
+            print("request.data:", request.data)
+            print("request.FILES:", request.FILES)
+            print("--- FIN DEPURACIÓN VIDEOGOXO CREATE ---\n")
+            # --- FIN IMPRESIONES DE DEPURACIÓN ---
+
+            # Lógica original para manejar la creación
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 
 class VideoxogoDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Videoxogo.objects.all()
